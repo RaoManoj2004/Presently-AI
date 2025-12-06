@@ -133,32 +133,32 @@
         <section id="features" class="features">
             <h2 class="section-title">Powerful Features</h2>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('scraping')">
                     <div class="feature-icon">🌐</div>
                     <h3>Web Scraping</h3>
                     <p>Extract content and images from any webpage automatically</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('ai')">
                     <div class="feature-icon">🤖</div>
                     <h3>AI Content Generation</h3>
                     <p>Google Gemini AI creates structured presentation content</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('slides')">
                     <div class="feature-icon">📊</div>
                     <h3>Professional Slides</h3>
                     <p>Beautiful PowerPoint presentations with custom layouts</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('narration')">
                     <div class="feature-icon">🎙️</div>
                     <h3>AI Narration</h3>
                     <p>Natural-sounding text-to-speech for each slide</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('music')">
                     <div class="feature-icon">🎵</div>
                     <h3>Smart Music Selection</h3>
                     <p>AI-powered background music matching your content</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('video')">
                     <div class="feature-icon">🎬</div>
                     <h3>Video Assembly</h3>
                     <p>Combines everything into a polished final video</p>
@@ -178,6 +178,16 @@
             </div>
             <p>&copy; 2024 Presently. Powered by Google Gemini AI.</p>
         </footer>
+    </div>
+
+    <!-- Feature Modals -->
+    <div id="featureModal" class="modal-overlay hidden" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <div id="modalBody">
+                <!-- Content will be injected here via JS -->
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
