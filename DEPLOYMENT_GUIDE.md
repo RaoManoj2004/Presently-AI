@@ -43,8 +43,18 @@ If you want "Forgot Password" and "Welcome" emails to work, add these too:
 
 > **Note:** Do NOT upload your `.env` file to GitHub or Render directly. using Environment Variables is the secure way.
 
+## Step 4b: Database Setup (Optional but Recommended)
+By default, the app uses a temporary local database which is reset every time you redeploy. To save users permanently:
+1. In Render Dashboard, click **New +** -> **PostgreSQL**.
+2. Name it `presently-db` (or similar).
+3. Copy the **Internal Database URL** (starts with `postgres://`).
+4. Go back to your `presently-app` Web Service.
+5. Go to **Environment Variables**.
+6. Add `DATABASE_URL` with the value you copied.
+
 ## Step 5: Deploy
 1. Click **"Create Web Service"**.
+
 2. Render will now start building your Docker image. 
    - *Note: This might take 5-10 minutes the first time because it needs to install LibreOffice and other dependencies.*
 3. You will see logs scrolling in the dashboard.
