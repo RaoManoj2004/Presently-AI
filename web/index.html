@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presently - AI Presentation Video Generator</title>
+    <title>Presently - AI Presentation & Video Generator</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -37,15 +37,15 @@
         <section class="hero">
             <div class="hero-badge">
                 <span class="badge-icon">✨</span>
-                <span>AI-Powered Video Generation</span>
+                <span>AI-Powered Presentation & Video Generation</span>
             </div>
             <h1 class="hero-title">
                 Transform Any Webpage Into
-                <span class="gradient-text">Professional Videos</span>
+                <span class="gradient-text">Professional Presentations</span>
             </h1>
             <p class="hero-description">
-                Automatically create stunning presentation videos with AI-generated narration,
-                background music, and beautiful slides from any web content.
+                Automatically create stunning PowerPoint slides and videos with AI-generated narration,
+                background music, and beautiful layouts from any web content.
             </p>
 
             <!-- Main Form -->
@@ -61,7 +61,7 @@
                         required />
                 </div>
                 <button id="generateBtn" class="generate-btn">
-                    <span class="btn-text">Generate Video</span>
+                    <span class="btn-text">Generate Presentation</span>
                     <svg class="btn-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -101,7 +101,7 @@
                     </div>
                     <div class="step" data-step="6">
                         <div class="step-icon">🎬</div>
-                        <span>Final Video</span>
+                        <span>Final Output</span>
                     </div>
                 </div>
                 <p id="progressMessage" class="progress-message">Starting process...</p>
@@ -111,9 +111,24 @@
             <div id="resultSection" class="result-section hidden">
                 <div class="result-card">
                     <div class="result-icon">✅</div>
-                    <h3>Video Generated Successfully!</h3>
-                    <p>Your presentation video is ready to download.</p>
+                    <h3>Presentation & Video Generated!</h3>
+                    <p>Your content is ready to download.</p>
                     <div class="result-actions">
+                        <button id="downloadPptBtn" class="secondary-btn" style="margin-right: 12px;">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-right: 8px;">
+                                <path
+                                    d="M4 4H16C17.1 4 18 4.9 18 6V14C18 15.1 17.1 16 16 16H4C2.9 16 2 15.1 2 14V6C2 4.9 2.9 4 4 4Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M10 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M8 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            Download PPT
+                        </button>
                         <button id="downloadBtn" class="download-btn">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M10 2V12M10 12L6 8M10 12L14 8" stroke="currentColor" stroke-width="2"
@@ -123,7 +138,11 @@
                             </svg>
                             Download Video
                         </button>
-                        <button id="newVideoBtn" class="secondary-btn">Create Another</button>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <button id="newVideoBtn" class="secondary-btn"
+                            style="border: none; background: transparent; color: var(--text-secondary); font-size: 14px;">Create
+                            Another</button>
                     </div>
                 </div>
             </div>

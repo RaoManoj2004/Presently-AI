@@ -8,11 +8,13 @@ const progressFill = document.getElementById('progressFill');
 const progressMessage = document.getElementById('progressMessage');
 const resultSection = document.getElementById('resultSection');
 const downloadBtn = document.getElementById('downloadBtn');
+const downloadPptBtn = document.getElementById('downloadPptBtn');
 const newVideoBtn = document.getElementById('newVideoBtn');
 
 // ===== State =====
 let currentProgress = 0;
 let videoPath = null;
+let pptPath = null;
 
 // ===== Progress Steps Configuration =====
 const steps = [
@@ -21,13 +23,14 @@ const steps = [
     { id: 3, name: 'Creating Slides', message: 'Creating PowerPoint presentation...' },
     { id: 4, name: 'Adding Music', message: 'Selecting background music...' },
     { id: 5, name: 'Narration', message: 'Generating AI narration...' },
-    { id: 6, name: 'Final Video', message: 'Assembling final video...' }
+    { id: 6, name: 'Final Output', message: 'Finalizing presentation and video...' }
 ];
 
 // ===== Event Listeners =====
 generateBtn.addEventListener('click', handleGenerate);
 newVideoBtn.addEventListener('click', resetForm);
 downloadBtn.addEventListener('click', handleDownload);
+downloadPptBtn.addEventListener('click', handleDownloadPpt);
 
 urlInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
@@ -86,7 +89,7 @@ async function startGeneration(url) {
 
     } catch (error) {
         console.error('Error:', error);
-        showError('Failed to generate video. Please try again.');
+        showError('Failed to generate content. Please try again.');
         resetForm();
     }
 }
@@ -101,9 +104,9 @@ async function pollProgress(jobId) {
                 updateProgress(data.progress, data.step, data.message);
             } else if (data.status === 'completed') {
                 clearInterval(pollInterval);
-                updateProgress(100, 6, 'Video generated successfully!');
+                updateProgress(100, 6, 'Generation successful!');
                 setTimeout(() => {
-                    showResult(data.video_path);
+                    showResult(data.video_path, data.ppt_path);
                 }, 1000);
             } else if (data.status === 'error') {
                 clearInterval(pollInterval);
@@ -146,8 +149,9 @@ function updateProgress(percentage, stepId = null, message = null) {
     }
 }
 
-function showResult(path) {
-    videoPath = path;
+function showResult(vPath, pPath) {
+    videoPath = vPath;
+    pptPath = pPath;
     progressSection.classList.add('hidden');
     resultSection.classList.remove('hidden');
 }
@@ -165,6 +169,7 @@ function resetForm() {
     // Clear input
     urlInput.value = '';
     videoPath = null;
+    pptPath = null;
 
     // Reset progress
     currentProgress = 0;
@@ -187,13 +192,33 @@ async function handleDownload() {
         // Trigger download
         const link = document.createElement('a');
         link.href = `/api/download/${videoPath}`;
-        link.download = 'presentation_video.mp4';
+        link.download = videoPath; // Use the actual filename
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     } catch (error) {
         console.error('Download error:', error);
         showError('Failed to download video. Please try again.');
+    }
+}
+
+async function handleDownloadPpt() {
+    if (!pptPath) {
+        showError('No presentation available for download');
+        return;
+    }
+
+    try {
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = `/api/download/${pptPath}`;
+        link.download = pptPath; // Use the actual filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Download error:', error);
+        showError('Failed to download presentation. Please try again.');
     }
 }
 
