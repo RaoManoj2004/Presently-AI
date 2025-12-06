@@ -35,6 +35,12 @@ Scroll down to the **Environment Variables** section and click **"Add Environmen
 - **Key**: `GOOGLE_API_KEY`
 - **Value**: `Your_Actual_Google_API_Key_Here` (Copy this from your local `.env` file)
 
+### Email Configuration (Optional but recommended)
+If you want "Forgot Password" and "Welcome" emails to work, add these too:
+- `MAIL_USERNAME`: Your Gmail address
+- `MAIL_PASSWORD`: Your Gmail App Password (not your login password)
+- `MAIL_DEFAULT_SENDER`: Your Gmail address
+
 > **Note:** Do NOT upload your `.env` file to GitHub or Render directly. using Environment Variables is the secure way.
 
 ## Step 5: Deploy

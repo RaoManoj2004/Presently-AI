@@ -24,7 +24,11 @@ from generate_video import create_presentation_video
 # Initialize Flask app
 app = Flask(__name__, static_folder='.', static_url_path='')
 app.config['SECRET_KEY'] = 'your-secret-key-change-this-in-production'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+# Use DATABASE_URL if available (Render provides this), otherwise use local SQLite
+database_url = os.environ.get('DATABASE_URL', 'sqlite:///users.db')
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 from flask_mail import Mail, Message
