@@ -27,7 +27,10 @@ def main():
     print_success("✓ Presentation content successfully generated")
     
     print_info("Converting markdown to PowerPoint...")
-    markdown_to_ppt(workspace_root, output_file=os.path.join(workspace_root, "temp", "presentation.ppt"))
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    ppt_filename = f"presentation_{timestamp}.ppt"
+    markdown_to_ppt(workspace_root, output_file=os.path.join(workspace_root, "temp", ppt_filename))
     print_success("✓ PowerPoint presentation successfully created")
     
     print_info("Selecting appropriate background music")

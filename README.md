@@ -1,183 +1,197 @@
-# Presently: AI-Powered Presentation Video Generator
+# Presently 🎬
 
-<div align="center">
-  <img src="media/banner.png" alt="Presently Banner" width="100%">
-</div>
+**AI-Powered Presentation Video Generator**
 
-Presently is an automated tool that transforms web content into professional presentation videos with synchronized narration and background music. Perfect for creating quick, high-quality presentation videos from any web content.
+Transform any webpage into professional presentation videos with AI-generated narration, background music, and beautiful slides.
 
-## Architecture
-![Architecture Preview](media/architecture.gif)
+![Presently Logo](web/logo.png)
 
-## Features
+## ✨ Features
 
-- **Web Content Scraping**: Extract structured content from any website
-- **AI-Powered Content Generation**: Convert web content into organized presentation slides
-- **PowerPoint Generation**: Create professional PowerPoint presentations automatically
-- **Text-to-Speech Narration**: Generate natural-sounding narration for each slide
-- **Intelligent Music Selection**: Match background music to your presentation content
-- **Video Production**: Combine slides, narration, and music into a professional video
+- 🌐 **Web Scraping** - Extract content and images from any webpage automatically
+- 🤖 **AI Content Generation** - Google Gemini AI creates structured presentation content
+- 📊 **Professional Slides** - Beautiful PowerPoint presentations with custom layouts
+- 🎙️ **AI Narration** - Natural-sounding text-to-speech for each slide
+- 🎵 **Smart Music Selection** - AI-powered background music matching your content
+- 🎬 **Video Assembly** - Combines everything into a polished final video
+- 🔐 **User Authentication** - Secure login and signup system
+- 🌐 **Modern Web Interface** - Beautiful, responsive web UI
 
-## Requirements
-
-### Software Dependencies
-
-- **Python 3.8+**: Core programming language
-- **LibreOffice**: For PowerPoint processing (or Microsoft PowerPoint)
-- **Poppler**: For PDF processing *(required for PDF-based slide extraction)*
-- **Google API Key**: For AI content generation with Google Gemini
-
-## Installation
+## 🚀 Quick Start
 
 ### Prerequisites
 
-Before installing the Python dependencies, make sure you have the following installed:
+- Python 3.8+
+- LibreOffice (for PPT to PDF conversion)
+- Poppler (for PDF to image conversion)
+- Google Gemini API Key
 
-- **Python 3.8+**: [Download Python](https://www.python.org/downloads/)
-- **Git**: [Download Git](https://git-scm.com/downloads) (if cloning from repository)
-- **pip**: Should come with Python, but ensure it's updated: `python -m pip install --upgrade pip`
+### Installation
 
-1. **Clone the repository** (or download and extract the ZIP file)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/RaoManoj2004/presently.git
+   cd presently
+   ```
 
-```powershell
-git clone https://github.com/saqlain2204/presently.git
-cd presently
-```
+2. **Install Python dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-2. **Create and activate a virtual environment** (recommended)
+3. **Install system dependencies**
+   - **LibreOffice**: Download from [libreoffice.org](https://www.libreoffice.org/)
+   - **Poppler**: 
+     - Windows: Download from [poppler releases](https://github.com/oschwartz10612/poppler-windows/releases)
+     - Linux: `sudo apt-get install poppler-utils`
+     - macOS: `brew install poppler`
 
-```powershell
-# Create a virtual environment
-python -m venv venv
+4. **Set up environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   GOOGLE_API_KEY=your_google_api_key_here
+   ```
 
-# Activate the virtual environment
-# On Windows:
-.\venv\Scripts\Activate
+5. **Run the web application**
+   ```bash
+   cd web
+   python app.py
+   ```
 
-# On macOS/Linux:
-# source venv/bin/activate
-```
+6. **Access the application**
+   
+   Open your browser and navigate to:
+   - Main App: http://localhost:5000
+   - Login: http://localhost:5000/login.html
+   - Signup: http://localhost:5000/signup.html
 
-3. **Install Python dependencies**
+## 📖 Usage
 
-```powershell
-pip install -r requirements.txt
-```
+### Web Interface
 
-4. **Install LibreOffice**
+1. **Create an account** or **log in**
+2. **Enter a webpage URL** you want to convert
+3. **Click "Generate Video"**
+4. **Watch the progress** in real-time
+5. **Download your video** when complete!
 
-- Windows: Download and install from [LibreOffice website](https://www.libreoffice.org/download/download/)
-- Make sure LibreOffice is in your system PATH
+### Command Line (Original)
 
-5. **Install Poppler**
-
-- Windows:
-  - Download Poppler for Windows
-  - Extract to a folder (e.g., `C:\poppler`)
-  - Add the `bin` folder to your PATH: `setx PATH "%PATH%;C:\poppler\bin"`
-
-1. **Set up environment variables**
-
-Create a `.env` file in the project root with your API keys:
-
-```
-GOOGLE_API_KEY=your_google_api_key_here
-```
-
-## Project Structure
-
-```
-presently/
-│
-├── assets/           # Stock resources
-│   └── music/        # Background music files
-│
-├── src/              # Source code
-│   ├── main.py       # Main application entry point
-│   ├── web_scraper.py
-│   ├── content_generator.py
-│   ├── convert_to_ppt.py
-│   ├── convert_to_images.py
-│   ├── text_to_audio.py
-│   ├── music_selection.py
-│   ├── generate_video.py
-│   ├── generate_image.py
-│   ├── most_similar_image.py
-│   └── terminal_utils.py
-│
-└── temp/             # Temporary working files (created automatically)
-    ├── presentation.md
-    ├── presentation.ppt
-    ├── presentation_video.mp4
-    ├── selected_music.mp3
-    ├── audio/
-    ├── images/
-    └── slide_images/
-```
-
-## Usage
-
-### Basic Usage
-
-Run the main script and follow the prompts:
-
-```powershell
+```bash
 cd src
 python main.py
 ```
 
-When prompted, enter the URL of the webpage you want to convert into a presentation video.
+Then enter the URL when prompted.
 
-### Output
+## 🏗️ Project Structure
 
-The final video will be saved to `temp/presentation_video.mp4`
+```
+presently/
+├── src/                      # Core Python application
+│   ├── main.py              # CLI entry point
+│   ├── web_scraper.py       # Web content extraction
+│   ├── content_generator.py # AI content generation
+│   ├── convert_to_ppt.py    # PowerPoint creation
+│   ├── music_selection.py   # Background music selection
+│   ├── text_to_audio.py     # Text-to-speech generation
+│   ├── convert_to_images.py # PPT to images conversion
+│   └── generate_video.py    # Final video assembly
+├── web/                      # Web frontend
+│   ├── app.py               # Flask backend API
+│   ├── index.html           # Main application page
+│   ├── login.html           # Login page
+│   ├── signup.html          # Signup page
+│   ├── terms.html           # Terms of Service
+│   ├── privacy.html         # Privacy Policy
+│   ├── style.css            # Styles
+│   └── script.js            # Frontend JavaScript
+├── assets/                   # Static assets
+│   └── music/               # Background music files
+├── temp/                     # Temporary files (gitignored)
+└── requirements.txt         # Python dependencies
+```
 
-## Pipeline Process
+## 🔧 Configuration
 
-1. **Web Scraping**: Extract content from the provided URL
-2. **Content Generation**: Process and organize the content for presentation
-3. **PowerPoint Creation**: Generate slides based on the processed content
-4. **Audio Generation**: Create narration for each slide using text-to-speech
-5. **Music Selection**: Choose appropriate background music based on content
-6. **Video Generation**: Combine slides, narration, and music into the final video
+### Google API Setup
 
-## Customization
+1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Create a new API key
+3. Add it to your `.env` file
 
-### Presentation Style
+### API Models Used
 
-Modify `convert_to_ppt.py` to change the PowerPoint style, colors, or layout.
+- **Content Generation**: `gemini-2.0-flash`
+- **Text-to-Speech**: `gemini-2.5-flash-tts`
 
-### Background Music
+## 🎨 Technologies
 
-Place additional music files in the `assets/music` folder to expand the selection options.
+### Backend
+- Python 3.14
+- Flask (Web server)
+- Flask-Login (Authentication)
+- Flask-SQLAlchemy (Database)
+- Google Generative AI (Content & TTS)
+- MoviePy (Video editing)
+- python-pptx (PowerPoint generation)
+- BeautifulSoup4 (Web scraping)
 
-## Troubleshooting
+### Frontend
+- HTML5
+- CSS3 (Modern design with glassmorphism)
+- Vanilla JavaScript
+- Google Fonts (Inter)
 
-### LibreOffice Issues
+## 📝 API Endpoints
 
-- Ensure LibreOffice is installed and in your system PATH
-- Try manually opening and saving a PowerPoint file to verify installation
+### Authentication
+- `POST /api/auth/signup` - User registration
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/check` - Check login status
 
-### PDF Extraction Issues
+### Video Generation
+- `POST /api/generate` - Start video generation
+- `GET /api/progress/<job_id>` - Get generation progress
+- `GET /api/download/<filename>` - Download generated video
 
-- Check that Poppler is properly installed and in your PATH
-- For Windows users: Verify the poppler bin directory is correctly added to PATH
+## ⚠️ Known Limitations
 
-### AI Content Generation
+- **API Quota**: Google Gemini API has free tier limits:
+  - Content Generation: 200 requests/day
+  - TTS: 15 requests/day, 3 requests/minute
+- **Processing Time**: Video generation can take 5-10 minutes depending on content
+- **File Size**: Large webpages may take longer to process
 
-- Verify your Google API key is correctly set in the `.env` file
-- Check for API usage limits or restrictions
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgments
+
+- Google Gemini AI for content generation and TTS
+- LibreOffice for document conversion
+- MoviePy for video processing
+- All open-source contributors
+
+## 📧 Contact
+
+For questions or support, please open an issue on GitHub.
+
+---
+
+**Made with ❤️ by Manoj Rao**
+
+⭐ Star this repo if you find it helpful!

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Presently</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            padding: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .auth-logo svg {
+            margin: 0 auto 16px;
+        }
+
+        .auth-logo h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .auth-logo p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all var(--transition-normal);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .password-strength-bar.weak {
+            width: 33%;
+            background: #f5576c;
+        }
+
+        .password-strength-bar.medium {
+            width: 66%;
+            background: #f093fb;
+        }
+
+        .password-strength-bar.strong {
+            width: 100%;
+            background: #4facfe;
+        }
+
+        .password-hint {
+            margin-top: 4px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .form-checkbox input {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .form-checkbox label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        .form-checkbox label a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .form-checkbox label a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.5);
+        }
+
+        .auth-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .auth-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color var(--transition-fast);
+        }
+
+        .auth-link a:hover {
+            color: #764ba2;
+        }
+
+        .error-message,
+        .success-message {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: rgba(245, 87, 108, 0.1);
+            border: 1px solid rgba(245, 87, 108, 0.3);
+            color: #f5576c;
+        }
+
+        .success-message {
+            background: rgba(79, 172, 254, 0.1);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            color: #4facfe;
+        }
+
+        .error-message.show,
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="10" fill="url(#gradient)" />
+                    <path d="M12 15L20 10L28 15V25L20 30L12 25V15Z" stroke="white" stroke-width="2"
+                        stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" stop-color="#667eea" />
+                            <stop offset="100%" stop-color="#764ba2" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>Create Account</h1>
+                <p>Start generating amazing videos today</p>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label class="form-label" for="fullname">Full Name</label>
+                    <input type="text" id="fullname" class="form-input" placeholder="John Doe" required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" class="form-input" placeholder="you@example.com" required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Create a strong password"
+                        required />
+                    <div class="password-strength">
+                        <div id="passwordStrengthBar" class="password-strength-bar"></div>
+                    </div>
+                    <div class="password-hint">
+                        Use 8+ characters with a mix of letters, numbers & symbols
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-input" placeholder="Re-enter your password"
+                        required />
+                </div>
+
+                <div class="form-checkbox">
+                    <input type="checkbox" id="terms" required />
+                    <label for="terms">
+                        I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a
+                            href="privacy.html" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="auth-btn" id="signupBtn">
+                    Create Account
+                </button>
+            </form>
+
+            <div class="auth-link">
+                Already have an account? <a href="login.html">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const signupForm = document.getElementById('signupForm');
+        const signupBtn = document.getElementById('signupBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const passwordInput = document.getElementById('password');
+        const passwordStrengthBar = document.getElementById('passwordStrengthBar');
+
+        // Password strength indicator
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            passwordStrengthBar.className = 'password-strength-bar';
+            if (strength >= 3) {
+                passwordStrengthBar.classList.add('strong');
+            } else if (strength >= 2) {
+                passwordStrengthBar.classList.add('medium');
+            } else if (strength >= 1) {
+                passwordStrengthBar.classList.add('weak');
+            }
+        });
+
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validation
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match';
+                errorMessage.classList.add('show');
+                return;
+            }
+
+            if (password.length < 8) {
+                errorMessage.textContent = 'Password must be at least 8 characters';
+                errorMessage.classList.add('show');
+                return;
+            }
+
+            // Disable button
+            signupBtn.disabled = true;
+            signupBtn.textContent = 'Creating account...';
+            errorMessage.classList.remove('show');
+            successMessage.classList.remove('show');
+
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ fullname, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Show success message
+                    successMessage.textContent = 'Account created successfully! Redirecting to login...';
+                    successMessage.classList.add('show');
+
+                    // Redirect to login after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    // Show error
+                    errorMessage.textContent = data.message || 'Failed to create account';
+                    errorMessage.classList.add('show');
+                    signupBtn.disabled = false;
+                    signupBtn.textContent = 'Create Account';
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                errorMessage.textContent = 'An error occurred. Please try again.';
+                errorMessage.classList.add('show');
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Create Account';
+            }
+        });
+
+        // Parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.gradient-orb');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 10;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+
+                orb.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+</body>
+
+</html>

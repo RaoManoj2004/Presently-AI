@@ -1,6 +1,37 @@
-.venv
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+env/
+
+# Environment Variables
 .env
+*.env
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+users.db
+
+# Temporary Files & Generated Content
 temp/
-# Python cache files
-src/__pycache__/
+*.tmp
+*.log
 src/presentation_videoTEMP_MPY_wvf_snd.mp3
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

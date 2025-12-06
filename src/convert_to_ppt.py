@@ -142,21 +142,21 @@ def markdown_to_ppt(workspace_dir, output_file="presentation.ppt"):
     add_title_slide(prs, title if title else "Presentation")
     
     for slide_data in slides:
-        check_text = " ".join(slide_data['points'])
         images_dir = os.path.join(workspace_dir, "temp", "images")
-
-        image_path = find_best_matching_image(images_dir, check_text)
-
-        if not image_path:
-            generated_image_path = os.path.join(
-                images_dir, f"{slide_data['title'].replace(' ', '_')}.png"
-            )
-            image_path = generate_image(check_text, generated_image_path)
+        
+        # Simple image selection: just use the first available image (no AI matching)
+        image_path = None
+        if os.path.exists(images_dir):
+            image_files = [f for f in os.listdir(images_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif'))]
+            if image_files:
+                image_path = os.path.join(images_dir, image_files[0])
+                print(f"Using image: {image_files[0]} for slide '{slide_data['title']}'")
 
         add_content_slide(prs, slide_data['title'], slide_data['points'], image_path)
 
-        if image_path and os.path.exists(image_path):
-            os.remove(image_path)
+        # Don't remove the image so it can be reused for other slides if needed
+        # if image_path and os.path.exists(image_path):
+        #     os.remove(image_path)
     
     add_thank_you_slide(prs)
     

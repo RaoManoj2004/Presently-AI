@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presently - AI Presentation Video Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="C:/Users/Admin/.gemini/antigravity/brain/03ff1693-a392-4043-9cff-c76e429a549e/presently_logo_1765010900500.png"
+                    alt="Presently Logo" width="40" height="40" style="border-radius: 10px;">
+                <span>Presently</span>
+            </div>
+            <nav class="nav">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#about">About</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="badge-icon">✨</span>
+                <span>AI-Powered Video Generation</span>
+            </div>
+            <h1 class="hero-title">
+                Transform Any Webpage Into
+                <span class="gradient-text">Professional Videos</span>
+            </h1>
+            <p class="hero-description">
+                Automatically create stunning presentation videos with AI-generated narration,
+                background music, and beautiful slides from any web content.
+            </p>
+
+            <!-- Main Form -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <svg class="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path
+                            d="M10 2C5.58 2 2 5.58 2 10C2 14.42 5.58 18 10 18C14.42 18 18 14.42 18 10C18 5.58 14.42 2 10 2Z"
+                            stroke="currentColor" stroke-width="1.5" />
+                        <path d="M10 6V10L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                    <input type="url" id="urlInput" placeholder="Enter webpage URL (e.g., https://example.com/article)"
+                        required />
+                </div>
+                <button id="generateBtn" class="generate-btn">
+                    <span class="btn-text">Generate Video</span>
+                    <svg class="btn-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Progress Section (Hidden by default) -->
+            <div id="progressSection" class="progress-section hidden">
+                <div class="progress-header">
+                    <h3 id="progressTitle">Processing your request...</h3>
+                    <span id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <div class="progress-steps">
+                    <div class="step" data-step="1">
+                        <div class="step-icon">🌐</div>
+                        <span>Scraping</span>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-icon">🤖</div>
+                        <span>AI Generation</span>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-icon">📊</div>
+                        <span>Creating Slides</span>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-icon">🎵</div>
+                        <span>Adding Music</span>
+                    </div>
+                    <div class="step" data-step="5">
+                        <div class="step-icon">🎙️</div>
+                        <span>Narration</span>
+                    </div>
+                    <div class="step" data-step="6">
+                        <div class="step-icon">🎬</div>
+                        <span>Final Video</span>
+                    </div>
+                </div>
+                <p id="progressMessage" class="progress-message">Starting process...</p>
+            </div>
+
+            <!-- Result Section (Hidden by default) -->
+            <div id="resultSection" class="result-section hidden">
+                <div class="result-card">
+                    <div class="result-icon">✅</div>
+                    <h3>Video Generated Successfully!</h3>
+                    <p>Your presentation video is ready to download.</p>
+                    <div class="result-actions">
+                        <button id="downloadBtn" class="download-btn">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M10 2V12M10 12L6 8M10 12L14 8" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M2 14V16C2 17.1 2.9 18 4 18H16C17.1 18 18 17.1 18 16V14" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                            Download Video
+                        </button>
+                        <button id="newVideoBtn" class="secondary-btn">Create Another</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Web Scraping</h3>
+                    <p>Extract content and images from any webpage automatically</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Content Generation</h3>
+                    <p>Google Gemini AI creates structured presentation content</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Professional Slides</h3>
+                    <p>Beautiful PowerPoint presentations with custom layouts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎙️</div>
+                    <h3>AI Narration</h3>
+                    <p>Natural-sounding text-to-speech for each slide</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>Smart Music Selection</h3>
+                    <p>AI-powered background music matching your content</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎬</div>
+                    <h3>Video Assembly</h3>
+                    <p>Combines everything into a polished final video</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div style="margin-bottom: 16px;">
+                <a href="terms.html"
+                    style="color: var(--text-secondary); text-decoration: none; margin: 0 16px; transition: color 0.2s;">Terms
+                    of Service</a>
+                <a href="privacy.html"
+                    style="color: var(--text-secondary); text-decoration: none; margin: 0 16px; transition: color 0.2s;">Privacy
+                    Policy</a>
+            </div>
+            <p>&copy; 2024 Presently. Powered by Google Gemini AI.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

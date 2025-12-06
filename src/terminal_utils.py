@@ -1,3 +1,11 @@
+import sys
+import os
+
+# Fix Windows console encoding for Unicode characters
+if sys.platform == 'win32':
+    os.system('chcp 65001 > nul')
+    sys.stdout.reconfigure(encoding='utf-8')
+
 class Colors:
     GREEN = '\033[92m'
     YELLOW = '\033[93m'
@@ -9,7 +17,11 @@ class Colors:
 
 def print_success(message):
     """Print a success message in green"""
-    print(f"{Colors.GREEN}{message}{Colors.END}")
+    try:
+        print(f"{Colors.GREEN}{message}{Colors.END}")
+    except UnicodeEncodeError:
+        # Fallback to ASCII-safe version
+        print(f"{Colors.GREEN}{message.encode('ascii', 'replace').decode('ascii')}{Colors.END}")
 
 def print_info(message):
     """Print an info message in blue"""
