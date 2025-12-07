@@ -6,6 +6,13 @@ Transform any webpage into professional presentation videos with AI-generated na
 
 ![Presently Logo](web/logo.png)
 
+## 🌐 Live Demo
+
+**🚀 Try it now:** [https://presently-ai-1.onrender.com](https://presently-ai-1.onrender.com)
+
+[![Deploy on Render](https://img.shields.io/badge/Deploy%20on-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://presently-ai-1.onrender.com)
+[![Status](https://img.shields.io/badge/Status-Live-success?style=for-the-badge)](https://presently-ai-1.onrender.com)
+
 ## ✨ Features
 
 - 🌐 **Web Scraping** - Extract content and images from any webpage automatically
@@ -112,6 +119,29 @@ presently/
 ├── temp/                     # Temporary files (gitignored)
 └── requirements.txt         # Python dependencies
 ```
+
+## 🚀 Deployment
+
+This application is deployed on **Render** using Docker.
+
+### Live Instance
+- **URL**: https://presently-ai-1.onrender.com
+- **Platform**: Render.com
+- **Container**: Docker
+- **Auto-deploy**: Enabled (deploys automatically on push to main branch)
+
+### Deploy Your Own Instance
+
+1. Fork this repository
+2. Create a [Render account](https://render.com)
+3. Create a new Web Service
+4. Connect your GitHub repository
+5. Set the following environment variable:
+   - `GOOGLE_API_KEY`: Your Google Gemini API key
+6. Render will automatically detect the `Dockerfile` and deploy!
+
+### Environment Variables Required
+- `GOOGLE_API_KEY`: Get it from [Google AI Studio](https://aistudio.google.com/apikey)
 
 ## 🔧 Configuration
 
