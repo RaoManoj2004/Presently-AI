@@ -4,8 +4,24 @@ import os
 import shutil
 
 load_dotenv()
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+
+# Initialize client inside function to avoid startup errors
+_client = None
+
+def _get_client():
+    global _client
+    if _client is None:
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            raise ValueError(
+                "GOOGLE_API_KEY environment variable is not set. "
+                "Please configure it in your Render dashboard under Environment variables."
+            )
+        _client = genai.Client(api_key=api_key)
+    return _client
+
 def find_best_matching_image(images_dir, text_query):
+    client = _get_client()
     best_image_path = None
     best_score = -float('inf') 
     

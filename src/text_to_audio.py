@@ -3,7 +3,20 @@ from google import genai
 from google.genai import types
 import wave
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+# Initialize client inside function to avoid startup errors
+_client = None
+
+def _get_client():
+    global _client
+    if _client is None:
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            raise ValueError(
+                "GOOGLE_API_KEY environment variable is not set. "
+                "Please configure it in your Render dashboard under Environment variables."
+            )
+        _client = genai.Client(api_key=api_key)
+    return _client
 
 def wave_file(filename, pcm, channels=1, rate=24000, sample_width=2):
     with wave.open(filename, "wb") as wf:
@@ -13,6 +26,7 @@ def wave_file(filename, pcm, channels=1, rate=24000, sample_width=2):
         wf.writeframes(pcm)
 
 def generate_audio(text, file_name):
+    client = _get_client()
     print(f"\n🔊 Requesting audio for text: {text[:50]}...") 
     response = client.models.generate_content(
         model="gemini-2.5-flash-preview-tts",

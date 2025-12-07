@@ -9,9 +9,24 @@ from terminal_utils import print_info, print_success
 
 # Load environment variables
 load_dotenv()
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+
+# Initialize client inside function to avoid startup errors
+_client = None
+
+def _get_client():
+    global _client
+    if _client is None:
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            raise ValueError(
+                "GOOGLE_API_KEY environment variable is not set. "
+                "Please configure it in your Render dashboard under Environment variables."
+            )
+        _client = genai.Client(api_key=api_key)
+    return _client
 
 def select_best_music(workspace_root, content_text):
+    client = _get_client()
     
     music_dir = os.path.join(workspace_root, "assets", "music")
     print_info(f"Searching for appropriate music in: {music_dir}")

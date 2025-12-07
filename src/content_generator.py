@@ -3,9 +3,24 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+
+# Track if genai has been configured
+_configured = False
+
+def _ensure_configured():
+    global _configured
+    if not _configured:
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            raise ValueError(
+                "GOOGLE_API_KEY environment variable is not set. "
+                "Please configure it in your Render dashboard under Environment variables."
+            )
+        genai.configure(api_key=api_key)
+        _configured = True
 
 def generate_content(file_path):
+    _ensure_configured()
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
 
