@@ -6,6 +6,7 @@ import urllib.parse
 from urllib.request import urlretrieve
 from pathlib import Path
 import hashlib
+import time
 
 def scrape_website(url):
     """
@@ -30,15 +31,49 @@ def scrape_website(url):
             'Sec-Fetch-Site': 'none',
             'Sec-Fetch-User': '?1'
         }
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
+        
+        print(f"Attempting to scrape URL: {url}")
+        
+        # Try to fetch the page with timeout and retries
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = requests.get(url, headers=headers, timeout=30)
+                response.raise_for_status()
+                break
+            except requests.Timeout:
+                if attempt < max_retries - 1:
+                    print(f"Timeout attempt {attempt + 1}/{max_retries}, retrying...")
+                    time.sleep(2)
+                    continue
+                else:
+                    raise Exception(f"Website took too long to respond after {max_retries} attempts")
+            except requests.ConnectionError as e:
+                raise Exception(f"Could not connect to website. Please check your internet connection and the URL. Details: {str(e)}")
+            except requests.HTTPError as e:
+                status_code = e.response.status_code
+                if status_code == 403:
+                    raise Exception(f"Access forbidden (403). The website may be blocking automated requests.")
+                elif status_code == 404:
+                    raise Exception(f"Page not found (404). Please check if the URL is correct.")
+                elif status_code == 500:
+                    raise Exception(f"Server error (500). The website is experiencing issues.")
+                else:
+                    raise Exception(f"HTTP error {status_code}: {str(e)}")
+        
+        print(f"Successfully fetched page (Status: {response.status_code})")
         
         soup = BeautifulSoup(response.text, 'html.parser')
         
+        # Remove unwanted elements
         for script in soup(["script", "style", "nav", "footer", "header"]):
             script.extract()
         
         content_dict = extract_text_content(soup)
+        
+        # Check if we got any meaningful content
+        if not content_dict.get('sections') and not content_dict.get('title'):
+            raise Exception("No content could be extracted from this page. The page may be empty or use dynamic content loading.")
         
         workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         images_dir = os.path.join(workspace_root, "temp", "images")
@@ -51,10 +86,14 @@ def scrape_website(url):
         with open(markdown_file_path, 'w', encoding='utf-8') as f:
             f.write(markdown_content)
         
+        print(f"Successfully scraped content: {len(content_dict.get('sections', []))} sections, {len(image_paths)} images")
+        
         return soup, content_dict, image_paths, markdown_file_path, workspace_root, url
     
     except Exception as e:
-        print(f"Error scraping website {url}: {e}")
+        error_msg = str(e)
+        print(f"Error scraping website {url}: {error_msg}")
+        # Return None to signal failure clearly
         return None, {}, [], None, None, url
 
 def extract_text_content(soup):
