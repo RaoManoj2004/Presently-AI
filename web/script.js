@@ -68,20 +68,28 @@ async function startGeneration(url) {
     updateProgress(0);
 
     try {
-        // Call backend API
+        // Call backend API with credentials for authentication
         const response = await fetch('/api/generate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify({ url: url })
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-            throw new Error('Failed to start generation');
+            // Handle specific error cases
+            if (response.status === 401) {
+                showError('Please log in to generate content.');
+                window.location.href = '/login.html';
+                return;
+            }
+            throw new Error(data.message || 'Failed to start generation');
         }
 
-        const data = await response.json();
         const jobId = data.job_id;
 
         // Poll for progress
@@ -89,7 +97,7 @@ async function startGeneration(url) {
 
     } catch (error) {
         console.error('Error:', error);
-        showError('Failed to generate content. Please try again.');
+        showError(error.message || 'Failed to generate content. Please try again.');
         resetForm();
     }
 }
@@ -97,7 +105,9 @@ async function startGeneration(url) {
 async function pollProgress(jobId) {
     const pollInterval = setInterval(async () => {
         try {
-            const response = await fetch(`/api/progress/${jobId}`);
+            const response = await fetch(`/api/progress/${jobId}`, {
+                credentials: 'include'
+            });
             const data = await response.json();
 
             // Handle queued and processing statuses

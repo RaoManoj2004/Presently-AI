@@ -35,10 +35,17 @@ from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
 
 # Initialize extensions
-CORS(app)
+CORS(app, supports_credentials=True)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    """Return JSON response for unauthorized API requests"""
+    if request.path.startswith('/api/'):
+        return jsonify({'message': 'Authentication required. Please log in.'}), 401
+    return app.redirect('/login.html')
 
 # ===== Database Models =====
 class User(UserMixin, db.Model):
