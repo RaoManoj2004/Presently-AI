@@ -265,6 +265,9 @@ def generate_video():
 
 def process_video(job):
     try:
+        # Set status to processing
+        job.status = 'processing'
+        
         workspace_root = os.path.join(os.path.dirname(__file__), '..')
         
         # Step 1: Web Scraping

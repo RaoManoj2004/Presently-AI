@@ -100,7 +100,8 @@ async function pollProgress(jobId) {
             const response = await fetch(`/api/progress/${jobId}`);
             const data = await response.json();
 
-            if (data.status === 'processing') {
+            // Handle queued and processing statuses
+            if (data.status === 'queued' || data.status === 'processing') {
                 updateProgress(data.progress, data.step, data.message);
             } else if (data.status === 'completed') {
                 clearInterval(pollInterval);
@@ -110,7 +111,7 @@ async function pollProgress(jobId) {
                 }, 1000);
             } else if (data.status === 'error') {
                 clearInterval(pollInterval);
-                showError(data.message || 'An error occurred during generation');
+                showError(data.error || data.message || 'An error occurred during generation');
                 resetForm();
             }
         } catch (error) {
