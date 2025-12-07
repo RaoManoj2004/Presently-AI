@@ -29,7 +29,7 @@ def generate_content(file_path):
         "Strictly maintain the format. Do not Alter it. Do not include any special charaters like ':' in the headings."
     )
 
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel('gemini-2.0-flash-lite')
     response = model.generate_content(prompt)
 
     return response.text

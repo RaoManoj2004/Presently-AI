@@ -30,7 +30,7 @@ def select_best_music(workspace_root, content_text):
         )
         
         keyword_response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-2.0-flash-lite",
             contents=[keyword_prompt]
         )
         

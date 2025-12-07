@@ -16,6 +16,11 @@ def main():
 
     print_info("Scraping website content...")
     _, content_dict, image_paths, markdown_path, workspace_root, url = scrape_website(url_input)
+    
+    if markdown_path is None:
+        print("Error: Failed to scrape website. Please check the URL.")
+        return
+        
     markdown_content = convert_to_markdown(content_dict, image_paths, url)
     print_success("✓ Website content successfully scraped and converted to markdown")
     

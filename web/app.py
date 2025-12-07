@@ -274,6 +274,9 @@ def process_video(job):
         
         _, content_dict, image_paths, markdown_path, workspace_root, url = scrape_website(job.url)
         
+        if markdown_path is None:
+            raise Exception("Failed to scrape website. Please check the URL and try again.")
+        
         # Step 2: Content Generation
         job.step = 2
         job.progress = 30

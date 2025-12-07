@@ -31,7 +31,7 @@ def find_best_matching_image(images_dir, text_query):
                 """
                 
                 logo_response = client.models.generate_content(
-                    model="gemini-2.0-flash",
+                    model="gemini-2.0-flash-lite",
                     contents=[my_file, logo_check_prompt],
                 )
                 
